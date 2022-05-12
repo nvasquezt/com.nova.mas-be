@@ -23,8 +23,8 @@ soatCode String @unique
 insurancePolicy String @unique
 vehiclePhone Int
 status Boolean @default(true)
-drivers Users[]
-dates Dates[]
+drivers Users?
+dates Dates?
 prevMaintenances PrevMaintenances?
 ctvMaintenances CtvMaintenances?
 specMaintenances SpecMaintenances?
