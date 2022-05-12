@@ -9,3 +9,70 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Vehicles {
+id Int @id
+licensePlate String @unique
+brand String
+modelAge Int
+classCar String
+fuelType String
+cylinder String
+capacity Int
+soatCode String @unique
+insurancePolicy String @unique
+vehiclePhone Int
+status Boolean @default(true)
+drivers Users[]
+dates Dates[]
+prevMaintenances PrevMaintenances?
+ctvMaintenances CtvMaintenances?
+specMaintenances SpecMaintenances?
+}
+
+model Users {
+idUser Int @id
+idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
+idVehicleFk Int
+name String
+lastName String
+userPhone Int
+annotations String
+status Boolean @default(true)
+role String @default("user")
+}
+
+model Dates {
+  dateCode Int @id
+  idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
+  idVehicleFk Int
+  soatDate DateTime
+  insuranceDate DateTime
+  legalRevisionDate DateTime
+}
+
+model PrevMaintenances {
+  idMaintenance Int @id @default(autoincrement())
+  idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
+  idVehicleFk Int
+  description String
+  commercialInvoice String
+}
+
+model CtvMaintenances {
+  idCorrective Int @id @default(autoincrement())
+  idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
+  idVehicleFk Int
+  description String
+  picEvidence String
+  commercialInvoice String
+}
+
+model SpecMaintenances {
+  idSpecific Int @id @default(autoincrement())
+  idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
+  idVehicleFk Int
+  description String
+  picEvidence String
+  commercialInvoice String
+}
