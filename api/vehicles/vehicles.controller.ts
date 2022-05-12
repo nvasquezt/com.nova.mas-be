@@ -4,11 +4,11 @@ import {
   getOneVehicle,
   addNewVehicle,
   updateVehicle,
-  deleteVehicle
- } from './vehicles.service';
+  deleteVehicle,
+} from './vehicles.service';
 
 export async function handlerAllVehicles(req: Request, res: Response) {
-  try{
+  try {
     const vehicles = await getAllVehicles();
     if (!vehicles) {
       res.status(404).json({ message: 'No vehicles found' });
@@ -16,13 +16,13 @@ export async function handlerAllVehicles(req: Request, res: Response) {
       res.status(200).json(vehicles);
     }
   } catch (error) {
-    res.status(500).json	({ message: 'Error while getting vehicles', error });
+    res.status(500).json({ message: 'Error while getting vehicles', error });
   }
 }
 
 export async function handlerOneVehicle(req: Request, res: Response) {
   const id = Number(req.params.id);
-  try{
+  try {
     const vehicle = await getOneVehicle(id);
     if (!vehicle) {
       res.status(404).json({ message: 'No vehicle found' });
@@ -30,46 +30,49 @@ export async function handlerOneVehicle(req: Request, res: Response) {
       res.status(200).json(vehicle);
     }
   } catch (error) {
-    res.status(500).json	({ message: 'Error while getting vehicle', error });
+    res.status(500).json({ message: 'Error while getting vehicle', error });
   }
 }
 
 export async function handlerRegisterVehicle(req: Request, res: Response) {
-  try{
-    const addVehicle = await addNewVehicle(req.body);
+  const dataVehicle = req.body;
+  try {
+    const addVehicle = await addNewVehicle(dataVehicle);
     if (!addVehicle) {
       res.status(404).json({ message: 'Vehicle was not added' });
     } else {
       res.status(200).json(addVehicle);
     }
   } catch (error) {
-    res.status(500).json	({ message: 'Error while adding vehicle', error });
+    res.status(500).json({ message: 'Error while adding vehicle', error });
   }
 }
 
 export async function handlerUpdateVehicle(req: Request, res: Response) {
   const id = parseInt(req.params.id);
   const vehicle = req.body;
-  try{
+  try {
     const patchVehicle = await updateVehicle(id, vehicle);
     if (!patchVehicle) {
       res.status(404).json({ message: 'Vehicle was not updated' });
+    } else {
+      res.status(200).json(patchVehicle);
     }
-    res.status(200).json(patchVehicle);
   } catch (error) {
-    res.status(500).json	({ message: 'Error while updating vehicle', error });
+    res.status(500).json({ message: 'Error while updating vehicle', error });
   }
 }
 
 export async function handlerDeleteVehicle(req: Request, res: Response) {
   const id = parseInt(req.params.id);
-  try{
+  try {
     const deletedVehicle = await deleteVehicle(id);
     if (!deletedVehicle) {
       res.status(404).json({ message: 'Vehicle was not deleted' });
+    } else {
+      res.status(200).json(deletedVehicle);
     }
-    res.status(200).json(deletedVehicle);
   } catch (error) {
-    res.status(500).json	({ message: 'Error while deleting vehicle', error });
+    res.status(500).json({ message: 'Error while deleting vehicle', error });
   }
 }

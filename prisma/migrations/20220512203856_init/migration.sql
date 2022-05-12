@@ -10,7 +10,7 @@ CREATE TABLE "Vehicles" (
     "capacity" INTEGER NOT NULL,
     "soatCode" TEXT NOT NULL,
     "insurancePolicy" TEXT NOT NULL,
-    "vehiclePhone" INTEGER NOT NULL,
+    "vehiclePhone" TEXT NOT NULL,
     "status" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "Vehicles_pkey" PRIMARY KEY ("id")
@@ -18,16 +18,26 @@ CREATE TABLE "Vehicles" (
 
 -- CreateTable
 CREATE TABLE "Users" (
-    "idUser" INTEGER NOT NULL,
+    "idUser" TEXT NOT NULL,
     "idVehicleFk" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
-    "userPhone" INTEGER NOT NULL,
-    "annotations" TEXT NOT NULL,
+    "userPhone" TEXT NOT NULL,
     "status" BOOLEAN NOT NULL DEFAULT true,
     "role" TEXT NOT NULL DEFAULT E'user',
+    "password" TEXT NOT NULL,
 
     CONSTRAINT "Users_pkey" PRIMARY KEY ("idUser")
+);
+
+-- CreateTable
+CREATE TABLE "Annotations" (
+    "idAnnotation" SERIAL NOT NULL,
+    "idUserFk" TEXT NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "description" TEXT NOT NULL,
+
+    CONSTRAINT "Annotations_pkey" PRIMARY KEY ("idAnnotation")
 );
 
 -- CreateTable
@@ -73,6 +83,17 @@ CREATE TABLE "SpecMaintenances" (
     CONSTRAINT "SpecMaintenances_pkey" PRIMARY KEY ("idSpecific")
 );
 
+-- CreateTable
+CREATE TABLE "TrackingLogs" (
+    "idLog" SERIAL NOT NULL,
+    "idVehicleFk" INTEGER NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL,
+    "latitude" DOUBLE PRECISION NOT NULL,
+    "longitude" DOUBLE PRECISION NOT NULL,
+
+    CONSTRAINT "TrackingLogs_pkey" PRIMARY KEY ("idLog")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Vehicles_licensePlate_key" ON "Vehicles"("licensePlate");
 
@@ -82,17 +103,11 @@ CREATE UNIQUE INDEX "Vehicles_soatCode_key" ON "Vehicles"("soatCode");
 -- CreateIndex
 CREATE UNIQUE INDEX "Vehicles_insurancePolicy_key" ON "Vehicles"("insurancePolicy");
 
--- CreateIndex
-CREATE UNIQUE INDEX "PrevMaintenances_idVehicleFk_key" ON "PrevMaintenances"("idVehicleFk");
-
--- CreateIndex
-CREATE UNIQUE INDEX "CtvMaintenances_idVehicleFk_key" ON "CtvMaintenances"("idVehicleFk");
-
--- CreateIndex
-CREATE UNIQUE INDEX "SpecMaintenances_idVehicleFk_key" ON "SpecMaintenances"("idVehicleFk");
-
 -- AddForeignKey
 ALTER TABLE "Users" ADD CONSTRAINT "Users_idVehicleFk_fkey" FOREIGN KEY ("idVehicleFk") REFERENCES "Vehicles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Annotations" ADD CONSTRAINT "Annotations_idUserFk_fkey" FOREIGN KEY ("idUserFk") REFERENCES "Users"("idUser") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Dates" ADD CONSTRAINT "Dates_idVehicleFk_fkey" FOREIGN KEY ("idVehicleFk") REFERENCES "Vehicles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -105,3 +120,6 @@ ALTER TABLE "CtvMaintenances" ADD CONSTRAINT "CtvMaintenances_idVehicleFk_fkey" 
 
 -- AddForeignKey
 ALTER TABLE "SpecMaintenances" ADD CONSTRAINT "SpecMaintenances_idVehicleFk_fkey" FOREIGN KEY ("idVehicleFk") REFERENCES "Vehicles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TrackingLogs" ADD CONSTRAINT "TrackingLogs_idVehicleFk_fkey" FOREIGN KEY ("idVehicleFk") REFERENCES "Vehicles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

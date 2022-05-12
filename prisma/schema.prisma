@@ -21,26 +21,35 @@ cylinder String
 capacity Int
 soatCode String @unique
 insurancePolicy String @unique
-vehiclePhone Int
+vehiclePhone String
 status Boolean @default(true)
-drivers Users?
-dates Dates?
-prevMaintenances PrevMaintenances?
-ctvMaintenances CtvMaintenances?
-specMaintenances SpecMaintenances?
-trackingLogs TrackingLogs?
+drivers Users[]
+dates Dates[]
+prevMaintenances PrevMaintenances[]
+ctvMaintenances CtvMaintenances[]
+specMaintenances SpecMaintenances[]
+trackingLogs TrackingLogs[]
 }
 
 model Users {
-idUser Int @id
+idUser String @id
 idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
 idVehicleFk Int
 name String
 lastName String
-userPhone Int
-annotations String
+userPhone String
+annotations Annotations[]
 status Boolean @default(true)
 role String @default("user")
+password String
+}
+
+model Annotations {
+idAnnotation Int @id @default(autoincrement())
+user Users @relation(fields: [idUserFk], references: [idUser])
+idUserFk String
+date DateTime @default(now())
+description String
 }
 
 model Dates {
