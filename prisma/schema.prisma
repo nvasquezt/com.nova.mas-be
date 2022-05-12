@@ -28,6 +28,7 @@ dates Dates?
 prevMaintenances PrevMaintenances?
 ctvMaintenances CtvMaintenances?
 specMaintenances SpecMaintenances?
+trackingLogs TrackingLogs?
 }
 
 model Users {
@@ -75,4 +76,13 @@ model SpecMaintenances {
   description String
   picEvidence String
   commercialInvoice String
+}
+
+model TrackingLogs {
+  idLog Int @id @default(autoincrement())
+  idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
+  idVehicleFk Int
+  date DateTime
+  latitude Float
+  longitude Float
 }
