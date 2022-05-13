@@ -6,6 +6,7 @@ import specificMaint from '../api/specificMaint';
 import prevMaintenances from '../api/prevMaint';
 import fixMaint from '../api/fixMaint';
 import dates from '../api/dates';
+import annotations from '../api/annotations';
 
 function routes(app: Router): void {
   app.use('/api/vehicles', vehicles);
@@ -15,6 +16,7 @@ function routes(app: Router): void {
   app.use('/api/prevmaint', prevMaintenances);
   app.use('/api/fixmaint', fixMaint);
   app.use('/api/dates', dates);
+  app.use('/api/user/annotations', annotations);
 }
 
 export default routes;

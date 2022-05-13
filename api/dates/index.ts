@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   handlerDates,
   handlerOneDateByVehicle,
@@ -9,10 +9,10 @@ import {
 
 const router = Router();
 
-  router.get('/', handlerDates);
-  router.get('/:vehicleId', handlerOneDateByVehicle);
-  router.post('/', handlerCreateDate);
-  router.patch('/:id', handlerUpdateDate);
-  router.delete('/:id', handlerDeleteDate);
+router.get('/', handlerDates);
+router.get('/:vehicleId', handlerOneDateByVehicle);
+router.post('/', handlerCreateDate);
+router.patch('/:id', handlerUpdateDate);
+router.delete('/:id', handlerDeleteDate);
 
-  export default router;
+export default router;

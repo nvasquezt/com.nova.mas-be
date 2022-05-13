@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import {
   getAllTrackingLogs,
   getOneTrackingLog,
   addNewTrackingLog,
   updateTrackingLog,
   deleteTrackingLog,
-} from "./trackingLogs.service";
+} from './trackingLogs.service';
 
 export async function handlerAllTrackingLogs(req: Request, res: Response) {
   try {
@@ -15,7 +15,9 @@ export async function handlerAllTrackingLogs(req: Request, res: Response) {
     }
     res.status(200).json(trackingLogs);
   } catch (error) {
-    res.status(500).json({ message: 'Error while getting trackingLogs', error });
+    res
+      .status(500)
+      .json({ message: 'Error while getting trackingLogs', error });
   }
 }
 
@@ -58,7 +60,9 @@ export async function handlerUpdateTrackLog(req: Request, res: Response) {
       res.status(200).json(patchTrackingLog);
     }
   } catch (error) {
-    res.status(500).json({ message: 'Error while updating TrackingLog', error });
+    res
+      .status(500)
+      .json({ message: 'Error while updating TrackingLog', error });
   }
 }
 
@@ -72,6 +76,8 @@ export async function handlerDeleteTrackLog(req: Request, res: Response) {
       res.status(200).json(deletedTrackingLog);
     }
   } catch (error) {
-    res.status(500).json({ message: 'Error while deleting TrackingLog', error });
+    res
+      .status(500)
+      .json({ message: 'Error while deleting TrackingLog', error });
   }
 }
