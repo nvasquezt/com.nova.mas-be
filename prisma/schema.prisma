@@ -53,7 +53,7 @@ description String
 }
 
 model Dates {
-  dateCode Int @id
+  dateCode Int @id @default(autoincrement())
   idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
   idVehicleFk Int
   soatDate DateTime
