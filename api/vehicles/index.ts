@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { isAuth, hasRole } from '../../auth/auth.service';
 import {
   handlerAllVehicles,
   handlerOneVehicle,
@@ -9,10 +10,10 @@ import {
 
 const router = Router();
 
-router.get('/', handlerAllVehicles);
-router.get('/:id', handlerOneVehicle);
+router.get('/', isAuth(), hasRole(['admin', 'user']), handlerAllVehicles);
+router.get('/:id', isAuth(), hasRole(['admin', 'user']), handlerOneVehicle);
 router.post('/', handlerRegisterVehicle);
-router.patch('/:id', handlerUpdateVehicle);
-router.delete('/:id', handlerDeleteVehicle);
+router.patch('/:id', isAuth(), hasRole(['admin', 'user']), handlerUpdateVehicle);
+router.delete('/:id', isAuth(), hasRole(['admin', 'user']), handlerDeleteVehicle);
 
 export default router;
