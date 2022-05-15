@@ -7,6 +7,7 @@ import prevMaintenances from '../api/prevMaint';
 import fixMaint from '../api/fixMaint';
 import dates from '../api/dates';
 import annotations from '../api/annotations';
+import authLocal from '../auth/local';
 
 function routes(app: Router): void {
   app.use('/api/vehicles', vehicles);
@@ -17,6 +18,7 @@ function routes(app: Router): void {
   app.use('/api/fixmaint', fixMaint);
   app.use('/api/dates', dates);
   app.use('/api/user/annotations', annotations);
+  app.use('/auth/local', authLocal);
 }
 
 export default routes;

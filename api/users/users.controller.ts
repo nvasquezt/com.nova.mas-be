@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import {
   getAllUsers,
@@ -35,6 +36,9 @@ export async function handlerOneUser(req: Request, res: Response) {
 
 export async function handlerRegisterUser(req: Request, res: Response) {
   const dataUser = req.body;
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(dataUser.password, salt);
+  dataUser.password = hash;
   try {
     const addUser = await addNewUser(dataUser);
     if (!addUser) {
