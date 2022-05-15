@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { handlerLoginUser } from './local.controller'
+import { Router } from 'express';
+import { handlerLoginUser } from './local.controller';
 
 const router = Router();
 
