@@ -12,7 +12,7 @@ const router = Router();
 
 router.get('/', isAuth(), hasRole(['admin', 'user']), handlerAllVehicles);
 router.get('/:id', isAuth(), hasRole(['admin', 'user']), handlerOneVehicle);
-router.post('/', handlerRegisterVehicle);
+router.post('/', isAuth(), hasRole(['admin', 'user']), handlerRegisterVehicle);
 router.patch('/:id', isAuth(), hasRole(['admin', 'user']), handlerUpdateVehicle);
 router.delete('/:id', isAuth(), hasRole(['admin', 'user']), handlerDeleteVehicle);
 
