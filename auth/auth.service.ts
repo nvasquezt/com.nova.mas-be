@@ -2,7 +2,7 @@ import { Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import { InfoAuthRequest } from './definitionFile';
 import { getOneUser } from '../api/users/users.service';
-import jsonWebToken, {JwtPayload} from 'jsonwebtoken';
+import jsonWebToken, { JwtPayload } from 'jsonwebtoken';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const compose = require('composable-middleware');
 
@@ -17,7 +17,7 @@ export function isAuth() {
           return res.status(401).json({ message: 'No token provided' });
         }
         const token = authHeader.split(' ')[1];
-        const payload = await verifyToken(token) as JwtPayload;
+        const payload = (await verifyToken(token)) as JwtPayload;
         if (payload) {
           const user = await getOneUser(payload.idUser);
           if (user) {

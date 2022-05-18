@@ -10,87 +10,95 @@ datasource db {
 }
 
 model Vehicles {
-id Int @id
-licensePlate String @unique
-brand String
-modelAge Int
-classCar String
-fuelType String
-cylinder String
-capacity Int
-soatCode String @unique
-insurancePolicy String @unique
-vehiclePhone String
-status Boolean @default(true)
-drivers Users[]
-dates Dates[]
-prevMaintenances PrevMaintenances[]
-ctvMaintenances CtvMaintenances[]
-specMaintenances SpecMaintenances[]
-trackingLogs TrackingLogs[]
+  id                Int                   @id
+  licensePlate      String                @unique
+  brand             String
+  modelAge          Int
+  classCar          String
+  fuelType          String
+  cylinder          String
+  capacity          Int
+  soatCode          String                @unique
+  insurancePolicy   String                @unique
+  rtmCode           String?                @unique
+  vehiclePhone      String
+  status            Boolean               @default(true)
+  picVehicle        String?
+  drivers           Users[]
+  dates             Dates[]
+  prevMaintenances  PrevMaintenances[]
+  ctvMaintenances   CtvMaintenances[]
+  specMaintenances  SpecMaintenances[]
+  trackingLogs      TrackingLogs[]
 }
 
 model Users {
-idUser String @id
-idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
-idVehicleFk Int
-name String
-lastName String
-userPhone String
-annotations Annotations[]
-status Boolean @default(true)
-role String @default("user")
-password String
+  idUser            String                @id
+  idVehicle         Vehicles              @relation(fields: [idVehicleFk], references: [id])
+  idVehicleFk       Int
+  name              String
+  lastName          String
+  userPhone         String
+  annotations       Annotations[]
+  status            Boolean               @default(true)
+  role              String                @default("user")
+  password          String
+  email             String?                @unique
+  picProfile        String?
+  jobPosition       String?
 }
 
 model Annotations {
-idAnnotation Int @id @default(autoincrement())
-user Users @relation(fields: [idUserFk], references: [idUser])
-idUserFk String
-date DateTime @default(now())
-description String
+  idAnnotation      Int                   @id @default(autoincrement())
+  user              Users                 @relation(fields: [idUserFk], references: [idUser])
+  idUserFk          String
+  date              DateTime              @default(now())
+  description       String
 }
 
 model Dates {
-  dateCode Int @id @default(autoincrement())
-  idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
-  idVehicleFk Int
-  soatDate DateTime
-  insuranceDate DateTime
+  dateCode          Int                   @id @default(autoincrement())
+  idVehicle         Vehicles              @relation(fields: [idVehicleFk], references: [id])
+  idVehicleFk       Int
+  soatDate          DateTime
+  insuranceDate     DateTime
   legalRevisionDate DateTime
 }
 
 model PrevMaintenances {
-  idMaintenance Int @id @default(autoincrement())
-  idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
-  idVehicleFk Int
-  description String
+  idMaintenance     Int                   @id @default(autoincrement())
+  idVehicle         Vehicles              @relation(fields: [idVehicleFk], references: [id])
+  idVehicleFk       Int
+  description       String
   commercialInvoice String
+  datePrevMaint     DateTime
 }
 
 model CtvMaintenances {
-  idCorrective Int @id @default(autoincrement())
-  idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
-  idVehicleFk Int
-  description String
-  picEvidence String
+  idCorrective      Int                   @id @default(autoincrement())
+  idVehicle         Vehicles              @relation(fields: [idVehicleFk], references: [id])
+  idVehicleFk       Int
+  description       String
+  picEvidence       String
   commercialInvoice String
+  dateCtvMaint      DateTime
 }
 
 model SpecMaintenances {
-  idSpecific Int @id @default(autoincrement())
-  idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
-  idVehicleFk Int
-  description String
-  picEvidence String
+  idSpecific        Int                   @id @default(autoincrement())
+  idVehicle         Vehicles              @relation(fields: [idVehicleFk], references: [id])
+  idVehicleFk       Int
+  description       String
+  picEvidence       String
   commercialInvoice String
+  dateSpecMaint     DateTime
 }
 
 model TrackingLogs {
-  idLog Int @id @default(autoincrement())
-  idVehicle Vehicles @relation(fields: [idVehicleFk], references: [id])
-  idVehicleFk Int
-  date DateTime @default(now())
-  latitude String
-  longitude String
+  idLog             Int                   @id @default(autoincrement())
+  idVehicle         Vehicles              @relation(fields: [idVehicleFk], references: [id])
+  idVehicleFk       Int
+  date              DateTime              @default(now())
+  latitude          String
+  longitude         String
 }
