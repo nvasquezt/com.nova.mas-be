@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt';
+import { UploadApiResponse } from 'cloudinary';
 import { Request, Response } from 'express';
+import uploadImage from '../../utils/Cloudinary';
 import {
   getAllUsers,
   getOneUser,
@@ -78,4 +80,30 @@ export async function handlerDeleteUser(req: Request, res: Response) {
   } catch (error) {
     res.status(500).json({ message: 'Error while deleting user', error });
   }
+}
+
+export async function handlerPostImage(req: Request, res: Response) {
+  const id = req.params.id;
+  const { file } = req;
+  try {
+    if(file){
+        const size = file.size / 1024 / 1024;
+        if (size > 5) {
+          return res.status(400).json({
+            message: 'Image size should be less than 5MB'
+          });
+        }
+      const result  = await uploadImage(file.path) as UploadApiResponse;
+      const picUser = result.url;
+      req.body.picProfile = picUser;
+      const patchUser = await updateUser(id, req.body);
+    if (!patchUser) {
+      res.status(404).json({ message: 'Image User was not updated' });
+    } else {
+      res.status(200).json(patchUser);
+    }
+  }
+} catch (error) {
+  res.status(500).json({ message: 'Error while updating image user', error });
+}
 }
