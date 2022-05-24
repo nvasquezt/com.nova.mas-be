@@ -10,9 +10,9 @@ export const getAllTrackingLogs = async () => {
   return null;
 };
 
-export const getOneTrackingLog = async (idLog: number) => {
-  const trackingLog = await prisma.trackingLogs.findUnique({
-    where: { idLog },
+export const getOneTrackingLog = async (idVehicleFk: number) => {
+  const trackingLog = await prisma.trackingLogs.findMany({
+    where: { idVehicleFk },
   });
   if (trackingLog) {
     return trackingLog;
