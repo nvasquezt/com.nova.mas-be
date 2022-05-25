@@ -60,9 +60,9 @@ model Dates {
   dateCode          Int                   @id @default(autoincrement())
   idVehicle         Vehicles              @relation(fields: [idVehicleFk], references: [id])
   idVehicleFk       Int
-  soatDate          DateTime
-  insuranceDate     DateTime
-  legalRevisionDate DateTime
+  soatDate          DateTime              @default(now())
+  insuranceDate     DateTime              @default(now())
+  legalRevisionDate DateTime              @default(now())
 }
 
 model PrevMaintenances {
