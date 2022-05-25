@@ -11,9 +11,9 @@ export const getAllPrevMaint = async () => {
   }
 };
 
-export const getOnePrevMaint = async (idMaintenance: number) => {
-  const onePrevMaint = await prisma.prevMaintenances.findUnique({
-    where: { idMaintenance },
+export const getOnePrevMaint = async (idVehicleFk : number) => {
+  const onePrevMaint = await prisma.prevMaintenances.findMany({
+    where: { idVehicleFk  },
   });
   if (onePrevMaint) {
     return onePrevMaint;
