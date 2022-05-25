@@ -12,7 +12,7 @@ export const getAllDates = async () => {
 };
 
 export const getOneDateByVehicle = async (id: number) => {
-  const oneDate = await prisma.dates.findMany({ where: { idVehicleFk: id } });
+  const oneDate = await prisma.dates.findFirst({ where: { idVehicleFk: id } });
   if (oneDate) {
     return oneDate;
   } else {
